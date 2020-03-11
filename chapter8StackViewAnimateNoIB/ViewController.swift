@@ -19,11 +19,16 @@ class ViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(rootStackView)
+        rootStackView.addBackground(color: .purple, radius: 12)
         let margin = view.layoutMarginsGuide
         view.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0)
         NSLayoutConstraint.activate([
             rootStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             rootStackView.topAnchor.constraint(equalTo: margin.topAnchor),
+//            stackBackgroundView.leadingAnchor.constraint(equalTo: rootStackView.leadingAnchor),
+//            stackBackgroundView.topAnchor.constraint(equalTo: rootStackView.topAnchor),
+//            stackBackgroundView.trailingAnchor.constraint(equalTo: rootStackView.trailingAnchor),
+//            stackBackgroundView.bottomAnchor.constraint(equalTo: rootStackView.bottomAnchor),
         ])
     }
     
@@ -62,9 +67,16 @@ class ViewController: UIViewController {
         return iv
     }()
     
+    private let stackBackgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .purple
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    
     private lazy var imageStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [heartImageView, starImageView, diamondImageView])
-        
         stackView.spacing = UIStackView.spacingUseSystem
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -75,13 +87,16 @@ class ViewController: UIViewController {
     
     private let axisSwitch: UISwitch = {
         let sw = UISwitch()
+        sw.onTintColor = .white
+        sw.thumbTintColor = .magenta
         sw.isOn = true
         return sw
     }()
     
     private lazy var rootStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [axisSwitch, imageStackView])
+        let stackView = UIStackView(arrangedSubviews: [axisSwitch, imageStackView, ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
+//        stackView.insertSubview(stackBackgroundView, at: 0)
         stackView.spacing = 16
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -89,7 +104,7 @@ class ViewController: UIViewController {
         stackView.contentMode = .scaleToFill
         // 8 point padding
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 20.0, leading: 8.0, bottom: 8.0, trailing: 8.0)
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 20.0, leading: 12, bottom: 12, trailing: 12)
         return stackView
     }()
 
